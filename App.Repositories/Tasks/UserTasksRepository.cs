@@ -4,11 +4,11 @@ using App.Entities;
 
 namespace App.Repositories
 {
-    public class TasksRepository : ITasksRepository
+    public class UserTasksRepository : IUserTasksRepository
     {
         private readonly AppDbContext dbContext;
 
-        public TasksRepository(AppDbContext dbContext)
+        public UserTasksRepository(AppDbContext dbContext)
         {
             this.dbContext = dbContext;
         }

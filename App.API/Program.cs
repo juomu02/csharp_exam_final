@@ -76,6 +76,7 @@ builder.Services.AddSingleton<TokenService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+builder.Services.AddScoped<IUserTasksRepository, UserTasksRepository>();
 
 builder.Services.AddCors(options =>
 {

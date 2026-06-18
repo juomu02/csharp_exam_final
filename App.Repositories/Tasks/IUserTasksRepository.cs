@@ -2,7 +2,7 @@ using App.Entities;
 
 namespace App.Repositories
 {
-    public interface ITasksRepository
+    public interface IUserTasksRepository
     {
         Task<UserTask> GetByIdAsync(int taskId);
         Task<List<UserTask>> GetAllAsync();
