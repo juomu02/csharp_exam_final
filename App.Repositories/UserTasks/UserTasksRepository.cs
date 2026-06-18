@@ -22,7 +22,17 @@ namespace App.Repositories
 
         public async Task<bool> DeleteAsync(int taskId)
         {
-            dbContext.UserTasks.Remove(new UserTask { Id = taskId });
+            var trackedTask = dbContext.UserTasks.Local.FirstOrDefault(t => t.Id == taskId);
+
+            if (trackedTask != null)
+            {
+                dbContext.UserTasks.Remove(trackedTask);
+            }
+            else
+            {
+                dbContext.UserTasks.Remove(new UserTask { Id = taskId });
+            }
+
             int result = await dbContext.SaveChangesAsync();
 
             if (result > 0)

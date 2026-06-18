@@ -10,6 +10,7 @@ using App.Repositories;
 using App.Services;
 using App.API;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,7 +38,6 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-builder.Services.AddControllers();
 
 builder.Services.AddAuthorization(options =>
 {
@@ -88,6 +88,23 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod();
     });
 });
+
+builder.Services.AddControllers()
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        options.InvalidModelStateResponseFactory = context =>
+        {
+            var errors = context.ModelState
+                .Where(x => x.Value.Errors.Count > 0)
+                .ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(x => x.ErrorMessage).ToArray()
+                );
+
+            return new BadRequestObjectResult(
+                new { error = "Invalid request data", errors });
+        };
+    });
 
 var app = builder.Build();
 

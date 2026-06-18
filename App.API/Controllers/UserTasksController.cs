@@ -41,12 +41,31 @@ namespace App.API.Controllers
             return Ok(tasks);
         }
 
-        [Authorize(Policy = "userOnly")]
+        [Authorize(Policy = "adminOnly")]
         [HttpGet("by-userid/{userId}")]
         public async Task<IActionResult> GetTasksByUserId(int userId)
         {
             var tasks = await userTasksService.GetAllByUserIdAsync(userId);
             return Ok(tasks);
+        }
+
+        [Authorize(Policy = "userOnly")]
+        [HttpGet("my-tasks/{taskId}")]
+        public async Task<IActionResult> GetMyTaskById(int taskId)
+        {
+            var userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "Id")?.Value);
+            var task = await userTasksService.GetAsync(taskId);
+            if (task == null || task.UserId != userId)
+                return NotFound();
+            return Ok(task);
+        }
+        [Authorize(Policy = "userOnly")]
+        [HttpGet("my-tasks/last")]
+        public async Task<IActionResult> GetMyLastTask()
+        {
+            var userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "Id")?.Value);
+            var task = await userTasksService.GetLastByUserIdAsync(userId);
+            return Ok(task);
         }
 
         [Authorize(Policy = "adminOnly")]
