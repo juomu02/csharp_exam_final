@@ -10,6 +10,20 @@ Egzamino projektas
 docker run --name App -e MYSQL_ROOT_PASSWORD=root -d -p 3306:3306 mysql:lts
 ```
 
+
+#### 2. User Secrets (lokaliems nustatymams)
+
+Po clone kitame kompiuteryje sukonfiguruokite slaptus nustatymus:
+
+```
+dotnet user-secrets init --project App.API/App.API.csproj
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=127.0.0.1;Port=3306;Database=App;Uid=root;Pwd=root;" --project App.API/App.API.csproj
+dotnet user-secrets set "Jwt:Issuer" "App_auth" --project App.API/App.API.csproj
+dotnet user-secrets set "Jwt:Audience" "App_api_audience" --project App.API/App.API.csproj
+dotnet user-secrets set "Jwt:Key" "replace-with-your-own-secret" --project App.API/App.API.csproj
+dotnet user-secrets list --project App.API/App.API.csproj
+```
+
 ### DB migracijos komandos
 
 #### Migracijų atnaujinimas rankiniu būdu
@@ -29,3 +43,5 @@ dotnet ef migrations add UpdateUserTable -p ./App.Data/ -s ./App.API/
 ### Swagger nuoroda
 
 http://localhost:5141/swagger/index.html
+
+
