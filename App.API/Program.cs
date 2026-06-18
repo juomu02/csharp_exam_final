@@ -77,6 +77,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IUserTasksRepository, UserTasksRepository>();
+builder.Services.AddScoped<IUserTasksService, UserTasksService>();
 
 builder.Services.AddCors(options =>
 {

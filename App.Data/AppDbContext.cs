@@ -29,8 +29,8 @@ namespace App.Data
             modelBuilder.Entity<UserTask>(o =>
             {
                 o.HasKey(e => e.Id);
-                o.Property(e => e.Title).IsRequired();
-                o.Property(e => e.Description).IsRequired();
+                o.Property(e => e.Title).HasMaxLength(100).IsRequired();
+                o.Property(e => e.Description).HasMaxLength(500);
                 o.Property(e => e.IsCompleted).HasDefaultValue(false);
                 o.Property(e => e.Importance).IsRequired();
                 o.Property(e => e.StartDate);

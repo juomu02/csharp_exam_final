@@ -27,7 +27,20 @@ namespace App.Services
             return await userTasksRepository.AddAsync(newTask);
         }
 
-        public async Task<bool> DeleteAsync(int taskId)
+        public async Task<bool> UserDeleteAsync(int userId, int taskId)
+        {
+            var task = await userTasksRepository.GetByIdAsync(taskId);
+            if (task == null)
+            {
+                throw new ArgumentException("Task not found.");
+            }
+            if (task.UserId != userId)
+            {
+                throw new UnauthorizedAccessException("User does not have permission to delete this task.");
+            }
+            return await userTasksRepository.DeleteAsync(taskId);
+        }
+        public async Task<bool> AdminDeleteAsync(int taskId)
         {
             var task = await userTasksRepository.GetByIdAsync(taskId);
             if (task == null)
@@ -77,12 +90,16 @@ namespace App.Services
             return lastTask;
         }
 
-        public async Task<bool> UpdateAsync(int taskId, string title, string description, bool isCompleted, TaskImportance importance, DateTime? startDate, DateTime? endDate)
+        public async Task<bool> UpdateAsync(int userId, int taskId, string title, string description, bool isCompleted, TaskImportance importance, DateTime? startDate, DateTime? endDate)
         {
             var task = await userTasksRepository.GetByIdAsync(taskId);
             if (task == null)
             {
                 throw new ArgumentException("Task not found.");
+            }
+            if (task.UserId != userId)
+            {
+                throw new UnauthorizedAccessException("User does not have permission to update this task.");
             }
 
             task.Title = title;
