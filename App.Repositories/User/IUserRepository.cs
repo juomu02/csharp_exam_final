@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using App.Entities;
 
 namespace App.Repositories
