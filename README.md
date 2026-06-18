@@ -18,7 +18,7 @@ dotnet user-secrets init --project App.API/App.API.csproj
 dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=127.0.0.1;Port=3306;Database=App;Uid=root;Pwd=root;" --project App.API/App.API.csproj
 dotnet user-secrets set "Jwt:Issuer" "App_auth" --project App.API/App.API.csproj
 dotnet user-secrets set "Jwt:Audience" "App_api_audience" --project App.API/App.API.csproj
-dotnet user-secrets set "Jwt:Key" "replace-with-your-own-secret" --project App.API/App.API.csproj
+dotnet user-secrets set "Jwt:Key" "My_most_secure_key_for_jwt_token_generation_12345" --project App.API/App.API.csproj
 dotnet user-secrets list --project App.API/App.API.csproj
 ```
 
