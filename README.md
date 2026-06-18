@@ -24,6 +24,12 @@ dotnet user-secrets set "Jwt:Key" "replace-with-your-own-secret" --project App.A
 dotnet user-secrets list --project App.API/App.API.csproj
 ```
 
+#### 3. Unit tests paleidimas
+*\*leidžiama iš ./App.Services.Tests direktorijos*
+```
+dotnet test
+```
+
 ### DB migracijos komandos
 
 #### Migracijų atnaujinimas rankiniu būdu
